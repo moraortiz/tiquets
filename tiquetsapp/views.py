@@ -3,12 +3,27 @@ from .models import Categoria, Tiquet
 from django.contrib.auth.models import User
 from .forms import Formulario
 from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
 
 
 def index(request):
     return render(request, 'tiquetsapp/index.html')
 
-def categorias(request):
+# def login(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(username=username, password=password)
+#     if user is not None:
+#         if user.is_active:
+#             login(request, user)
+#             # Redirect to a success page.
+#             return HttpResponse("You're logged in.")
+#         else:
+#             # Return a 'disabled account' error message
+#             return HttpResponse("Your username and password didn't match.")
+#     else:
+
+def listado_categorias(request):
     listado = Categoria.objects.all()
     try:
         listado[0]
@@ -26,7 +41,7 @@ def detalle_categoria(request, id):
     context = {'object': contenido}
     return render(request, 'tiquetsapp/detalle_categoria.html', context)
 
-def tiquets(request):
+def listado_tiquets(request):
     listado = Tiquet.objects.all()
     try:
         listado[0]
@@ -58,7 +73,25 @@ def nuevo_tiquet(request):
         if form.is_valid():
             tiquet = form.save()
             tiquet.save()
-            return redirect('detalle_tiquet', pk=tiquet.pk)
+            return redirect('detalle-tiquet', tiquet.pk)
     else:
         form = Formulario()
     return render(request, 'tiquetsapp/editor.html', {'form': form})
+
+
+# def acceso(request):
+#     try:
+#         m = Member.objects.get(username__exact=request.POST['username'])
+#         if m.password == request.POST['password']:
+#             request.session['member_id'] = m.id
+#             return HttpResponse("You're logged in.")
+#     except Member.DoesNotExist:
+#         return HttpResponse("Your username and password didn't match.")
+#
+#
+# def salida(request):
+#     try:
+#         del request.session['member_id']
+#     except KeyError:
+#         pass
+#     return HttpResponse("You're logged out.")

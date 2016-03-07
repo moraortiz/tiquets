@@ -1,34 +1,35 @@
 {% extends 'tiquetsapp/index.html' %}
 
 {% block content %}
-    <h1>Nuevo formulario</h1>
-    <form method="POST" class="formulario">{% csrf_token %}
-        <input type="hidden" name="{{ form.autor.html_name }}" value="{{ request.user.id }}">
-        <label for="{{ form.titulo.id_for_label }}">{{ form.titulo.display_name }}</label>
-        <input type="text" id="{{ form.titulo.id_for_label }}" name="{{ form.titulo.html_name }}" value="{{ form.titulo.value|default_if_none:'' }}">
-        <label for="{{ form.contenido.id_for_label }}">{{ form.contenido.display_name }}</label>
-        <input type="text" id="{{ form.contenido.id_for_label }}" name="{{ form.contenido.html_name }}">
-        <input type="submit" value="Crear" style="background:#da0041;">
-
-        {% for e in form.autor.errors %}
-            <p>{{ e }}</p>
-        {% endfor %}
-        {% for e in form.titulo.errors %}
-            <p>{{ e }}</p>
-        {% endfor %}
-        {% for e in form.contenido.errors %}
-            <p>{{ e }}</p>
-        {% endfor %}
-        {% for e in form.non_field_errors %}
-            <p>{{ e }}</p>
-        {% endfor %}
-    </form>
+{#    <h1>Nuevo formulario</h1>#}
+{#    <form method="POST" class="formulario">{% csrf_token %}#}
+{#        <input type="hidden" name="{{ form.autor.html_name }}" value="{{ request.user.id }}">#}
+{#        <label for="{{ form.titulo.id_for_label }}">{{ form.titulo.display_name }}</label>#}
+{#        <input type="text" id="{{ form.titulo.id_for_label }}" name="{{ form.titulo.html_name }}" value="{{ form.titulo.value|default_if_none:'' }}">#}
+{#        <label for="{{ form.contenido.id_for_label }}">{{ form.contenido.display_name }}</label>#}
+{#        <input type="text" id="{{ form.contenido.id_for_label }}" name="{{ form.contenido.html_name }}">#}
+{#        <input type="submit" value="Crear" style="background:#da0041;">#}
+{##}
+{#        {% for e in form.autor.errors %}#}
+{#            <p>{{ e }}</p>#}
+{#        {% endfor %}#}
+{#        {% for e in form.titulo.errors %}#}
+{#            <p>{{ e }}</p>#}
+{#        {% endfor %}#}
+{#        {% for e in form.contenido.errors %}#}
+{#            <p>{{ e }}</p>#}
+{#        {% endfor %}#}
+{#        {% for e in form.non_field_errors %}#}
+{#            <p>{{ e }}</p>#}
+{#        {% endfor %}#}
+{#    </form>#}
 
 
 <div class="contenedor-formulario">
     <div class="wrap">
         <h1>Nuevo formulario</h1>
         <form method="POST" class="formulario">
+            {% csrf_token %}
             <div>
                 {% csrf_token %}
                 <div class="input-group">
