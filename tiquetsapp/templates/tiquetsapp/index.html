@@ -1,0 +1,13 @@
+<h1>¡Bienvenido al sistema de tíquets!</h1>
+
+<div class="page-header">
+    <a href="{% url 'formulario' %}" class="top-menu">
+        <span class="glyphicon glyphicon-plus"></span>
+    </a>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<a href={% url "listado-categorias" %}>Ver Categorías</a>
+<a href={% url "listado-tiquets" %}>Ver Tíquets</a>

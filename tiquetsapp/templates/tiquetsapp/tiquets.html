@@ -1,0 +1,12 @@
+<h1>Tíquets</h1>
+
+<dl>
+{% for object in object_list %}
+    <dt>
+        <a href={% url "detalle-tiquet" object.id %}>{{ object }}</a>
+        <dd>
+        <a href={% url "detalle-tiquet" object.autor.id %}>{{ object.autor }}</a>
+        </dd>
+    </dt>
+{% endfor %}
+</dl>
