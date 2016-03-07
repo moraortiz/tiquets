@@ -8,6 +8,15 @@
 
 {% block content %}
 {% endblock %}
+<button type="submit" class="save btn btn-default">
+    <a href={% url "formulario" %}>
+        Crear tíquet
+    </a>
+</button>
+<br>
+<br>
 
-<a href={% url "listado-categorias" %}>Ver Categorías</a>
-<a href={% url "listado-tiquets" %}>Ver Tíquets</a>
+<div class="footer">
+    <a href={% url "listado-categorias" %}>Ver Categorías</a>
+    <a href={% url "listado-tiquets" %}>Ver Tíquets</a>
+</div>

@@ -2,8 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from .models import Categoria, Tiquet
 from django.contrib.auth.models import User
 from .forms import Formulario
-from django.views.generic import ListView, DetailView
-from django.views import generic
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -54,4 +53,12 @@ def tiquets_autor(request, id):
 
 def nuevo_tiquet(request):
     form = Formulario()
+    if request.method == "POST":
+        form = Formulario(request.POST)
+        if form.is_valid():
+            tiquet = form.save()
+            tiquet.save()
+            return redirect('detalle_tiquet', pk=tiquet.pk)
+    else:
+        form = Formulario()
     return render(request, 'tiquetsapp/editor.html', {'form': form})
