@@ -25,7 +25,7 @@ class Tiquet(models.Model):
     time_stamp = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
-
+    tiquet = models.ForeignKey(Categoria, related_name="tiquets")
     autor = models.ForeignKey(User, verbose_name="Autor")
     titulo = models.CharField(max_length=127)
     contenido = models.TextField(max_length=255)
@@ -50,7 +50,8 @@ class Tiquet(models.Model):
 class Comentario(models.Model):
 
     comentario = models.ForeignKey(Tiquet, related_name="comentarios")
-    texto_comentario = models.TextField(max_length=255)
+    contenido = models.TextField(max_length=255)
+    autor = models.ForeignKey(User, verbose_name="Autor", blank=True, null=True)
 
     def __str__(self):
-        return self.texto_comentario
+        return self.contenido

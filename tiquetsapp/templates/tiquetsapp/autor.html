@@ -1,4 +1,5 @@
-<h1>{{ object.name }}</h1>
+<h1>{{ object.username }} {{ object.last_name }}</h1>
+<h3>Última conexión: {{ object.last_login }}</h3>
 
 <h3>Tíquets creados:</h3>
 {% for object in object.tiquets.all %}

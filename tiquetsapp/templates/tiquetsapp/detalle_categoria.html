@@ -1,1 +1,22 @@
-   {{ object.nombre }}
+<!DOCTYPE html>
+<html  lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>tiquet</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="page-headder">
+        <h1>{{ object.nombre }}</h1>
+    </div>
+</div>
+<div class="container-fluid">
+    <h3>Tíquets</h3>
+    {% for object in object.tiquets_set.all %}
+        <p>{{ object.titulo }}</p>
+    {% endfor %}
+</div>
+</body>

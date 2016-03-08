@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>logout</title>
+</head>
+<body>
+<h1>¡Hasta pronto!</h1>
+
+<form name="redirect" id="redirect">
+    <div class="container">
+        <h4 face="Arial">
+            Serás redireccionado en
+            <form>
+            <input size="3" style="border: hidden;alignment: center" name="redirect2">
+        </form>
+            segundos
+        </h4>
+    </div>
+    <script type="text/javascript">
+        var targetURL="http://127.0.0.1:8000/tiquetsapp/"
+        var countdownfrom=5
+        var currentsecond=document.redirect.redirect2.value=countdownfrom+1
+        function countredirect(){
+            if (currentsecond!=1){
+                currentsecond-=1
+                document.redirect.redirect2.value=currentsecond
+            }
+            else{
+                window.location=targetURL
+                return
+            }
+            setTimeout("countredirect()",1000)
+        }
+        countredirect()
+    </script>
+</form>
+
+</body>
+</html>

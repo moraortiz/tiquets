@@ -1,7 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from .models import Categoria, Tiquet
 from django.contrib.auth.models import User
-from .forms import Formulario
+from .forms import Formulario, Comentario
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
 
@@ -16,13 +17,20 @@ def index(request):
 #     if user is not None:
 #         if user.is_active:
 #             login(request, user)
-#             # Redirect to a success page.
-#             return HttpResponse("You're logged in.")
+#             return render(request, 'index')
 #         else:
-#             # Return a 'disabled account' error message
-#             return HttpResponse("Your username and password didn't match.")
+#             return render(request, 'login')
 #     else:
+#         return render(request, 'login')
+#
+# def logout(request):
+#     try:
+#         del request.session['member_id']
+#     except KeyError:
+#         pass
+#     return render(request, 'index')
 
+@login_required
 def listado_categorias(request):
     listado = Categoria.objects.all()
     try:
@@ -35,12 +43,16 @@ def listado_categorias(request):
     context = {'object_list': listado}
     return render(request, 'tiquetsapp/categorias.html', context)
 
+
+@login_required
 def detalle_categoria(request, id):
 
     contenido = get_object_or_404(Categoria, pk=id)
     context = {'object': contenido}
     return render(request, 'tiquetsapp/detalle_categoria.html', context)
 
+
+@login_required
 def listado_tiquets(request):
     listado = Tiquet.objects.all()
     try:
@@ -53,12 +65,15 @@ def listado_tiquets(request):
     context = {'object_list': listado}
     return render(request, 'tiquetsapp/tiquets.html', context)
 
+
+@login_required
 def detalle_tiquet(request, id):
     contenido = get_object_or_404(Tiquet, pk=id)
     context = {'object': contenido}
     return render(request, 'tiquetsapp/detalle_tiquet.html', context)
 
 
+@login_required
 def tiquets_autor(request, id):
     usuario = User.objects.get(id=id)
     listado = Tiquet.objects.all()
@@ -66,6 +81,7 @@ def tiquets_autor(request, id):
     return render(request, 'tiquetsapp/autor.html', context)
 
 
+@login_required
 def nuevo_tiquet(request):
     form = Formulario()
     if request.method == "POST":
@@ -79,19 +95,15 @@ def nuevo_tiquet(request):
     return render(request, 'tiquetsapp/editor.html', {'form': form})
 
 
-# def acceso(request):
-#     try:
-#         m = Member.objects.get(username__exact=request.POST['username'])
-#         if m.password == request.POST['password']:
-#             request.session['member_id'] = m.id
-#             return HttpResponse("You're logged in.")
-#     except Member.DoesNotExist:
-#         return HttpResponse("Your username and password didn't match.")
-#
-#
-# def salida(request):
-#     try:
-#         del request.session['member_id']
-#     except KeyError:
-#         pass
-#     return HttpResponse("You're logged out.")
+@login_required
+def comentario(request):
+    form = Comentario()
+    if request.method == "POST":
+        form = Formulario(request.POST)
+        if form.is_valid():
+            comentario = form.save()
+            comentario.save()
+            return redirect('detalle-tiquet', comentario.pk)
+    else:
+        form = Formulario()
+    return render('index', {'form': form})
